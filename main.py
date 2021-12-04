@@ -2,7 +2,7 @@ import tkinter as tk
 from listEventsPage import ListEventsPage
 from sideMenu import SideMenu
 from addPersonPage import AddPerssonPage
-
+from addMeetingPage import AddMeetingPage
 
 class App:
 
@@ -21,11 +21,14 @@ class App:
         menu = SideMenu(self.window)
         menu.create_menu()
 
-        events = ListEventsPage(self.window)
-        events.create_page()
+        #events = ListEventsPage(self.window)
+        #events.create_page()
 
         #person_page = AddPerssonPage(self.window)
         #person_page.create_page()
+
+        add = AddMeetingPage(self.window)
+        add.create_page()
 
         self.window.mainloop()
 
