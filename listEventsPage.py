@@ -5,11 +5,14 @@ class ListEventsPage:
 
     def __init__(self, window: tk.Tk):
         self.window = window
-        self.canvas = tk.Canvas(self.window)
-        self.top_frame = tk.Frame(self.window)
-        self.main_frame = tk.Frame(self.window)
+
+        self.canvas = tk.Canvas(self.window, bg="grey", highlightthickness=0)
+        self.top_frame = tk.Frame(self.window, bg="grey")
+        self.main_frame = tk.Frame(self.window, bg="grey")
+
         self.scrollbar_y = tk.Scrollbar(self.window, command=self.canvas.yview)
         self.scrollbar_x = tk.Scrollbar(self.window, orient="horizontal", command=self.canvas.xview)
+
         self.start_label = tk.Label(self.top_frame, text="Start date:")
         self.end_label = tk.Label(self.top_frame, text="End date:")
         self.start_entry = tk.Entry(self.top_frame)
@@ -18,8 +21,8 @@ class ListEventsPage:
         self.end_hour_label = tk.Label(self.top_frame, text="End hour: ")
         self.start_hour_entry = tk.Entry(self.top_frame)
         self.end_hour_entry = tk.Entry(self.top_frame)
-        self.filter_button = tk.Button(self.top_frame, text="Filter", command=self.filter_command)
 
+        self.filter_button = tk.Button(self.top_frame, text="Filter", command=self.filter_command)
 
     def pack_elements(self):
         self.top_frame.pack(side="top")
@@ -31,7 +34,9 @@ class ListEventsPage:
         for i in range(20):
             temp = "Title {}\nStart Date: 2021-11-29 10:12\nEnd Date: 2021-11-29 11:00\nParticipants: Andrei, Robert"
             temp = temp + "Andrei, " * i
-            tk.Label(self.main_frame, text=temp.format(i), justify="left").pack(pady=20, anchor=tk.W)
+            tk.Label(self.main_frame, text=temp.format(i), justify="left", bg="white", anchor="w").pack(pady=20,
+                                                                                                        anchor=tk.W,
+                                                                                                        fill=tk.X)
 
     def create_canvas(self):
         self.canvas.create_window(0, 0, anchor='nw', window=self.main_frame)

@@ -1,6 +1,7 @@
 import tkinter as tk
 from listEventsPage import ListEventsPage
 from sideMenu import SideMenu
+from addPersonPage import AddPerssonPage
 
 
 class App:
@@ -9,6 +10,7 @@ class App:
         self.window = tk.Tk()
         self.window.title("Meeting scheduler")
         self.window.minsize(width=700, height=800)
+        self.window.configure(bg="grey")
 
     def set_window_prop(self):
         self.window.title("Meeting scheduler")
@@ -21,6 +23,9 @@ class App:
 
         events = ListEventsPage(self.window)
         events.create_page()
+
+        #person_page = AddPerssonPage(self.window)
+        #person_page.create_page()
 
         self.window.mainloop()
 
