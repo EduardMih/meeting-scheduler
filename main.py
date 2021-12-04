@@ -9,7 +9,7 @@ class App:
     def __init__(self):
         self.window = tk.Tk()
         self.window.title("Meeting scheduler")
-        self.window.minsize(width=700, height=800)
+        self.window.minsize(width=800, height=800)
         self.window.configure(bg="grey")
 
     def set_window_prop(self):
