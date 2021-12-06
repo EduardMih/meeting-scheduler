@@ -7,6 +7,8 @@ class ListEventsPage(Page):
     def __init__(self, window: tk.Tk):
         super(ListEventsPage, self).__init__(window)
 
+        self.title_label = tk.Label(self.container, text="Vizualizare evenimente", bg="grey", fg="white")
+
         self.wrapper = tk.Frame(self.container)
         self.canvas = tk.Canvas(self.wrapper, bg="grey", highlightthickness=0)
         self.top_frame = tk.Frame(self.container, bg="grey")
@@ -27,6 +29,7 @@ class ListEventsPage(Page):
         self.filter_button = tk.Button(self.top_frame, text="Filter", command=self.filter_command)
 
     def pack_elements(self):
+        self.title_label.pack(fill="both", pady=20)
         self.top_frame.pack(side="top")
         self.scrollbar_y.pack(side=tk.RIGHT, fill=tk.Y)
         self.scrollbar_x.pack(side=tk.BOTTOM, fill=tk.X)

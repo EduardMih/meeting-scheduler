@@ -6,6 +6,8 @@ class AddMeetingPage(Page):
     def __init__(self, window: tk.Tk):
         super(AddMeetingPage, self).__init__(window)
 
+        self.title_label = tk.Label(self.container, text="Adauga meeting", bg="grey", fg="white")
+
         self.wrapper = tk.Frame(self.container, bg="grey")
 
         self.start_label = tk.Label(self.wrapper, text="Start date:", bg="grey", fg="white")
@@ -44,6 +46,7 @@ class AddMeetingPage(Page):
 
         self.submit_button.grid(row=4, column=0, columnspan=4 , padx=2, pady=(20, 0), sticky="we")
 
+        self.title_label.pack(fill="both", pady=20)
         self.wrapper.pack(expand=True)
 
         return self.container

@@ -7,6 +7,7 @@ class AddPerssonPage(Page):
         super(AddPerssonPage, self).__init__(window)
 
         self.frame = tk.Frame(self.container, bg="grey")
+        self.title_label = tk.Label(self.container, text="Adauga persoana", bg="grey", fg="white")
         self.lastname_label = tk.Label(self.frame, text="Nume", bg="grey", fg="white")
         self.lastname_entry = tk.Entry(self.frame)
         self.firstname_label = tk.Label(self.frame, text="Prenume", bg="grey", fg="white")
@@ -20,6 +21,7 @@ class AddPerssonPage(Page):
         self.firstname_entry.grid(row=1, column=1, pady=(0, 5))
         self.submit_button.grid(row=0, column=3, rowspan=2, sticky=tk.N+tk.S, padx=20, pady=(0, 5))
 
+        self.title_label.pack(fill="both", pady=20)
         self.frame.pack(expand=True)
 
         return self.container

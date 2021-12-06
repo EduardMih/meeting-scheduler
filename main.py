@@ -21,7 +21,7 @@ class App:
 
         menu = SideMenu(self.window, frames, frames[0]).create_menu()
         menu.pack(side="left", fill=tk.Y, padx=(0, 10))
-        frames[0].pack(expand=True)
+        frames[0].pack(fill="both", expand=True)
 
         self.window.mainloop()
 
