@@ -1,7 +1,4 @@
-import tkinter as tk
-
-import page
-from page import Page
+from graphics.page import *
 
 
 class ListEventsPage(Page):
@@ -10,7 +7,7 @@ class ListEventsPage(Page):
         super(ListEventsPage, self).__init__(window)
 
         self.title_label = tk.Label(self.container, text="Vizualizare evenimente", bg="grey", fg="white",
-                                    font=page.title_font)
+                                    font=title_font)
 
         self.wrapper = tk.Frame(self.container)
         self.canvas = tk.Canvas(self.wrapper, bg="grey", highlightthickness=0)

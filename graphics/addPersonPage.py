@@ -1,7 +1,4 @@
-import tkinter as tk
-
-import page
-from page import Page
+from graphics.page import *
 
 
 class AddPerssonPage(Page):
@@ -9,7 +6,7 @@ class AddPerssonPage(Page):
         super(AddPerssonPage, self).__init__(window)
 
         self.frame = tk.Frame(self.container, bg="grey")
-        self.title_label = tk.Label(self.container, text="Adauga persoana", bg="grey", fg="white", font=page.title_font)
+        self.title_label = tk.Label(self.container, text="Adauga persoana", bg="grey", fg="white", font=title_font)
         self.lastname_label = tk.Label(self.frame, text="Nume", bg="grey", fg="white")
         self.lastname_entry = tk.Entry(self.frame)
         self.firstname_label = tk.Label(self.frame, text="Prenume", bg="grey", fg="white")
