@@ -7,7 +7,7 @@ class SideMenu:
         self.frame = frame
         self.current_frame = current_frame
         self.menu = tk.Frame(window, bg="orange", width=200)
-        self.title_label = tk.Label(self.menu, text="Menu", bg="orange", fg="white")
+        self.title_label = tk.Label(self.menu, text="Menu", bg="orange", fg="white", font="Helvetica 15 bold")
         self.menu_options = ["Adauga persoana", "Adauga eveniment", "Afiseaza evenimente", "Import", "Export"]
 
     def create_menu_options(self):

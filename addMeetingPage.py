@@ -1,4 +1,6 @@
 import tkinter as tk
+
+import page
 from page import Page
 
 
@@ -6,7 +8,7 @@ class AddMeetingPage(Page):
     def __init__(self, window: tk.Tk):
         super(AddMeetingPage, self).__init__(window)
 
-        self.title_label = tk.Label(self.container, text="Adauga meeting", bg="grey", fg="white")
+        self.title_label = tk.Label(self.container, text="Adauga meeting", bg="grey", fg="white", font=page.title_font)
 
         self.wrapper = tk.Frame(self.container, bg="grey")
 
