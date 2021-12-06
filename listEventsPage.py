@@ -1,14 +1,15 @@
 import tkinter as tk
+from page import Page
 
 
-class ListEventsPage:
+class ListEventsPage(Page):
 
     def __init__(self, window: tk.Tk):
-        self.window = window
+        super(ListEventsPage, self).__init__(window)
 
-        self.wrapper = tk.Frame(self.window)
+        self.wrapper = tk.Frame(self.container)
         self.canvas = tk.Canvas(self.wrapper, bg="grey", highlightthickness=0)
-        self.top_frame = tk.Frame(self.window, bg="grey")
+        self.top_frame = tk.Frame(self.container, bg="grey")
         self.main_frame = tk.Frame(self.wrapper, bg="grey")
 
         self.scrollbar_y = tk.Scrollbar(self.wrapper, command=self.canvas.yview)
@@ -68,6 +69,8 @@ class ListEventsPage:
         self.create_canvas()
         self.grid_entries()
         self.pack_elements()
+
+        return self.container
 
     def filter_command(self):
         start_date = self.start_entry.get()

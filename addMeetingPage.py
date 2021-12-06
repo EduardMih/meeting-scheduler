@@ -1,10 +1,12 @@
 import tkinter as tk
+from page import Page
 
 
-class AddMeetingPage:
-    def __init__(self, window:tk.Tk):
-        self.window = window
-        self.wrapper = tk.Frame(self.window, bg="grey")
+class AddMeetingPage(Page):
+    def __init__(self, window: tk.Tk):
+        super(AddMeetingPage, self).__init__(window)
+
+        self.wrapper = tk.Frame(self.container, bg="grey")
 
         self.start_label = tk.Label(self.wrapper, text="Start date:", bg="grey", fg="white")
         self.end_label = tk.Label(self.wrapper, text="End date:", bg="grey", fg="white")
@@ -43,6 +45,8 @@ class AddMeetingPage:
         self.submit_button.grid(row=4, column=0, columnspan=4 , padx=2, pady=(20, 0), sticky="we")
 
         self.wrapper.pack(expand=True)
+
+        return self.container
 
     def get_data(self):
         start_date = self.start_entry.get()

@@ -4,31 +4,24 @@ from sideMenu import SideMenu
 from addPersonPage import AddPerssonPage
 from addMeetingPage import AddMeetingPage
 
-class App:
 
+class App:
     def __init__(self):
         self.window = tk.Tk()
         self.window.title("Meeting scheduler")
-        self.window.minsize(width=800, height=800)
+        self.window.minsize(width=1000, height=800)
         self.window.configure(bg="grey")
-
-    def set_window_prop(self):
-        self.window.title("Meeting scheduler")
-        self.window.minsize(width=500, height=800)
 
     def run(self):
         self.window.update()
-        menu = SideMenu(self.window)
-        menu.create_menu()
 
-        #events = ListEventsPage(self.window)
-        #events.create_page()
+        frames = [AddPerssonPage(self.window).create_page(),
+                  AddMeetingPage(self.window).create_page(),
+                  ListEventsPage(self.window).create_page()]
 
-        #person_page = AddPerssonPage(self.window)
-        #person_page.create_page()
-
-        add = AddMeetingPage(self.window)
-        add.create_page()
+        menu = SideMenu(self.window, frames, frames[0]).create_menu()
+        menu.pack(side="left", fill=tk.Y, padx=(0, 10))
+        frames[0].pack(expand=True)
 
         self.window.mainloop()
 

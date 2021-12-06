@@ -1,10 +1,12 @@
 import tkinter as tk
+from page import Page
 
 
-class AddPerssonPage:
+class AddPerssonPage(Page):
     def __init__(self, window: tk.Tk):
-        self.window = window
-        self.frame = tk.Frame(self.window, bg="grey")
+        super(AddPerssonPage, self).__init__(window)
+
+        self.frame = tk.Frame(self.container, bg="grey")
         self.lastname_label = tk.Label(self.frame, text="Nume", bg="grey", fg="white")
         self.lastname_entry = tk.Entry(self.frame)
         self.firstname_label = tk.Label(self.frame, text="Prenume", bg="grey", fg="white")
@@ -19,6 +21,8 @@ class AddPerssonPage:
         self.submit_button.grid(row=0, column=3, rowspan=2, sticky=tk.N+tk.S, padx=20, pady=(0, 5))
 
         self.frame.pack(expand=True)
+
+        return self.container
 
     def get_data(self):
         lastname = self.lastname_entry.get()
