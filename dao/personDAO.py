@@ -1,4 +1,6 @@
+import psycopg2
 from model.dbConnection import DbConnection
+from exception.exceptions import *
 
 
 class PersonDAO:
@@ -8,24 +10,39 @@ class PersonDAO:
 
     def insert_person(self, firstname, lastname):
         db_connection = DbConnection()
-        connection = db_connection.get_connection()
 
-        cursor = connection.cursor()
-        cursor.execute(self.insert_sql, (firstname, lastname))
-        connection.commit()
+        try:
+            connection = db_connection.get_connection()
 
-        cursor.close()
-        db_connection.close_connection()
+            cursor = connection.cursor()
+            cursor.execute(self.insert_sql, (firstname, lastname))
+            connection.commit()
+
+            cursor.close()
+            db_connection.close_connection()
+        except psycopg2.DatabaseError as e:
+            if e.pgcode == '23505':
+                raise PersonExists
+
+            else:
+
+                raise
 
     def select_person_by_firstname_and_lastname(self, firstname, lastname):
         db_connection = DbConnection()
-        connection = db_connection.get_connection()
 
-        cursor = connection.cursor()
-        cursor.execute(self.select_sql, (firstname, lastname))
-        row = cursor.fetchone()
+        try:
+            connection = db_connection.get_connection()
 
-        cursor.close()
-        db_connection.close_connection()
+            cursor = connection.cursor()
+            cursor.execute(self.select_sql, (firstname, lastname))
+            row = cursor.fetchone()
 
-        return row
+            cursor.close()
+            db_connection.close_connection()
+        except Exception:
+            raise
+
+        else:
+
+            return row

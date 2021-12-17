@@ -1,5 +1,4 @@
 import psycopg2
-import sys
 
 
 class DbConnection:
@@ -15,8 +14,9 @@ class DbConnection:
             )
 
         except psycopg2.DatabaseError as e:
-            print(f'Error {e}')
-            sys.exit(1)
+            #print(f'Error {e}')
+            #sys.exit(1)
+            raise
 
         # finally:
             # if self.connection:

@@ -10,4 +10,4 @@ person = Person("Lorena", "Popescu")
 person_service = PersonService()
 print(person_service.get_person(person))
 
-
+#person_service.insert_person(person)
