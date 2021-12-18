@@ -4,3 +4,7 @@ class DbConnectionException(Exception):
 
 class PersonExists(Exception):
     pass
+
+
+class PersonDoesNotExistException(Exception):
+    pass
