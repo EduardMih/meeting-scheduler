@@ -1,4 +1,5 @@
 import psycopg2
+from psycopg2.extras import RealDictCursor
 
 
 class DbConnection:
@@ -10,7 +11,8 @@ class DbConnection:
             self.connection = psycopg2.connect(
                 database="meeting-scheduler",
                 user="postgres",
-                password="postgres"
+                password="postgres",
+                cursor_factory=RealDictCursor
             )
 
         except psycopg2.DatabaseError as e:

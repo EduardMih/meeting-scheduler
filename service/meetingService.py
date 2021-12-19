@@ -24,7 +24,7 @@ class MeetingService:
 
                     raise PersonDoesNotExistException
 
-                self.meeting_person_DAO.insert_meeting_person(new_meeting_id, row[0])
+                self.meeting_person_DAO.insert_meeting_person(new_meeting_id, row['id'])
 
         except PersonDoesNotExistException:
             raise
@@ -37,12 +37,14 @@ class MeetingService:
             meeting_rows = self.meeting_DAO.filter_meetings_by_date(start_date, end_date)
 
             for meeting_row in meeting_rows:
-                meeting = Meeting(meeting_row[0], meeting_row[1], None, meeting_row[2])
+                meeting = Meeting(meeting_row['start_date'], meeting_row['end_date'], None, meeting_row['id'])
 
-                attendees_id_list = [x[1] for x in self.meeting_person_DAO.select_all_meeting_attendees(meeting_row[2])]
+                attendees_id_list = [x[1] for x in self.meeting_person_DAO.select_all_meeting_attendees(meeting_row['id'])]
                 for attendee_id in attendees_id_list:
                     attendee_row = self.person_DAO.select_person_by_id(attendee_id)
-                    meeting.attendees_list.append(Person(attendee_row[1], attendee_row[2], attendee_row[0]))
+                    meeting.attendees_list.append(Person(attendee_row['lastname'],
+                                                         attendee_row['firstname'],
+                                                         attendee_row['id']))
 
                 meetings_list.append(meeting)
 
@@ -50,17 +52,3 @@ class MeetingService:
 
         except Exception as e:
             print(e)
-
-
-
-
-
-
-
-
-
-
-
-
-
-

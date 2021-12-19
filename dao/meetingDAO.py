@@ -15,7 +15,7 @@ class MeetingDAO:
 
             cursor = connection.cursor()
             cursor.execute(self.insert_sql, (start_date, end_date))
-            meeting_id = cursor.fetchone()[0]
+            meeting_id = cursor.fetchone()['id']
             connection.commit()
 
             cursor.close()
