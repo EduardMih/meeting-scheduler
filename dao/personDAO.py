@@ -6,7 +6,8 @@ from exception.exceptions import *
 class PersonDAO:
     def __init__(self):
         self.insert_sql = """INSERT INTO persons (firstname, lastname) VALUES (%s, %s)"""
-        self.select_sql = """SELECT * FROM persons WHERE firstname=%s AND lastname=%s"""
+        self.select_sql_by_firstname_and_lastname = """SELECT * FROM persons WHERE firstname=%s AND lastname=%s"""
+        self.select_sql_by_id = """SELECT * FROM persons WHERE id=%s"""
 
     def insert_person(self, firstname, lastname):
         db_connection = DbConnection()
@@ -35,7 +36,7 @@ class PersonDAO:
             connection = db_connection.get_connection()
 
             cursor = connection.cursor()
-            cursor.execute(self.select_sql, (firstname, lastname))
+            cursor.execute(self.select_sql_by_firstname_and_lastname, (firstname, lastname))
             row = cursor.fetchone()
 
             cursor.close()
@@ -46,3 +47,23 @@ class PersonDAO:
         else:
 
             return row
+
+    def select_person_by_id(self, person_id):
+        db_connection = DbConnection()
+
+        try:
+            connection = db_connection.get_connection()
+
+            cursor = connection.cursor()
+            cursor.execute(self.select_sql_by_id, (person_id, ))
+            row = cursor.fetchone()
+
+            cursor.close()
+            db_connection.close_connection()
+        except Exception:
+            raise
+
+        else:
+
+            return row
+

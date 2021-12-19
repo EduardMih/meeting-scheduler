@@ -2,7 +2,8 @@ from model.personModel import Person
 
 
 class Meeting:
-    def __init__(self, start_date, end_date, attendees_list: [Person]):
+    def __init__(self, start_date=None, end_date=None, attendees_list: [Person] = None, meeting_id=None):
+        self.id = meeting_id
         self.start_date = start_date
         self.end_date = end_date
-        self.attendees_list: [Person] = attendees_list
+        self.attendees_list: [Person] = attendees_list if attendees_list is not None else []

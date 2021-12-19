@@ -7,13 +7,3 @@ class Person:
     def __repr__(self) -> str:
 
         return self.lastname + " " + self.firstname
-
-
-
-
-
-
-
-
-
-

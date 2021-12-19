@@ -3,6 +3,7 @@ from model.dbConnection import DbConnection
 from model.personModel import Person
 from model.meetingModel import Meeting
 from service.personService import PersonService
+from dao.meetingDAO import MeetingDAO
 from service.meetingService import MeetingService
 import datetime
 #app = App()
@@ -18,8 +19,15 @@ import datetime
 current = datetime.datetime.now()
 add = datetime.timedelta(hours=2)
 future = current + add
+future2 = current - add
 #print(current, future)
 
-meeting = Meeting(current, future, [Person("Lorena", "Popescu"), Person("Zahar", "Andrei")])
+#meeting = Meeting(current, future, [Person("Lorena", "Popescu"), Person("Zamurca", "Andrei")])
 meeting_service = MeetingService()
-meeting_service.insert_meeting(meeting)
+#meeting_service.insert_meeting(meeting)
+rows = meeting_service.filter_meetings(future2, future)
+print(rows)
+
+#mdao = MeetingDAO()
+#print(mdao.filter_meetings_by_date(current, future))
+

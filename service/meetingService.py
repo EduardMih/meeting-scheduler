@@ -2,6 +2,7 @@ from dao.meetingDAO import MeetingDAO
 from dao.meetingPersonDAO import MeetingPersonDAO
 from dao.personDAO import PersonDAO
 from model.meetingModel import Meeting
+from model.personModel import Person
 from exception.exceptions import *
 
 
@@ -29,3 +30,37 @@ class MeetingService:
             raise
         except Exception as e:
             print("Exceptie necunoscuta la insert meeting")
+
+    def filter_meetings(self, start_date, end_date) -> [Meeting]:
+        try:
+            meetings_list = []
+            meeting_rows = self.meeting_DAO.filter_meetings_by_date(start_date, end_date)
+
+            for meeting_row in meeting_rows:
+                meeting = Meeting(meeting_row[0], meeting_row[1], None, meeting_row[2])
+
+                attendees_id_list = [x[1] for x in self.meeting_person_DAO.select_all_meeting_attendees(meeting_row[2])]
+                for attendee_id in attendees_id_list:
+                    attendee_row = self.person_DAO.select_person_by_id(attendee_id)
+                    meeting.attendees_list.append(Person(attendee_row[1], attendee_row[2], attendee_row[0]))
+
+                meetings_list.append(meeting)
+
+                return meetings_list
+
+        except Exception as e:
+            print(e)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
