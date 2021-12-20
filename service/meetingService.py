@@ -4,6 +4,8 @@ from dao.personDAO import PersonDAO
 from model.meetingModel import Meeting
 from model.personModel import Person
 from exception.exceptions import *
+from datetime import datetime
+import pytz
 
 
 class MeetingService:
@@ -11,14 +13,26 @@ class MeetingService:
         self.meeting_DAO = MeetingDAO()
         self.meeting_person_DAO = MeetingPersonDAO()
         self.person_DAO = PersonDAO()
+        self.date_format = "%d-%m-%Y %H:%M"
 
-    def insert_meeting(self, meeting: Meeting):
+    def insert_meeting(self, start_date, end_date, attendees: [(str, str)]):
+
+        start = self.convert_date(start_date)
+
+        if not start:
+            raise InvalidStartDatetime
+
+        end = self.convert_date(end_date)
+
+        if not end:
+            raise InvalidEndDatetime
+
         try:
-            new_meeting_id = self.meeting_DAO.insert_meeting(meeting.start_date, meeting.end_date)
+            new_meeting_id = self.meeting_DAO.insert_meeting(start, end)
 
-            for attendee in meeting.attendees_list:
-                row = self.person_DAO.select_person_by_firstname_and_lastname(attendee.firstname,
-                                                                              attendee.lastname)
+            for attendee in attendees:
+                row = self.person_DAO.select_person_by_firstname_and_lastname(attendee[0],
+                                                                              attendee[1])
 
                 if row is None:
 
@@ -32,14 +46,24 @@ class MeetingService:
             print("Exceptie necunoscuta la insert meeting")
 
     def filter_meetings(self, start_date, end_date) -> [Meeting]:
+        start = self.convert_date(start_date)
+
+        if not start:
+            raise InvalidStartDatetime
+
+        end = self.convert_date(end_date)
+
+        if not end:
+            raise InvalidEndDatetime
+
         try:
             meetings_list = []
-            meeting_rows = self.meeting_DAO.filter_meetings_by_date(start_date, end_date)
+            meeting_rows = self.meeting_DAO.filter_meetings_by_date(start, end)
 
             for meeting_row in meeting_rows:
                 meeting = Meeting(meeting_row['start_date'], meeting_row['end_date'], None, meeting_row['id'])
 
-                attendees_id_list = [x[1] for x in self.meeting_person_DAO.select_all_meeting_attendees(meeting_row['id'])]
+                attendees_id_list = [x['person_id'] for x in self.meeting_person_DAO.select_all_meeting_attendees(meeting_row['id'])]
                 for attendee_id in attendees_id_list:
                     attendee_row = self.person_DAO.select_person_by_id(attendee_id)
                     meeting.attendees_list.append(Person(attendee_row['lastname'],
@@ -52,3 +76,18 @@ class MeetingService:
 
         except Exception as e:
             print(e)
+
+    def convert_date(self, date):
+        try:
+            date_time_obj = datetime.strptime(date, self.date_format)
+            timezone = pytz.timezone("Europe/Bucharest")
+            timezone.localize(date_time_obj)
+        except ValueError:
+
+            return False
+
+        else:
+
+            return date_time_obj
+
+

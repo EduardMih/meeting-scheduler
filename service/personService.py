@@ -10,12 +10,8 @@ class PersonService:
     def insert_person(self, person: Person):
         try:
             self.person_DAO.insert_person(person.firstname, person.lastname)
-        except PersonExists as e:
-            print("Persoana exista")
-
-        except Exception:
-
-            print("Exceptie necunoscuta la insert person")
+        except Exception as e:
+            raise
 
     def get_person(self, person: Person) -> Person:
         try:

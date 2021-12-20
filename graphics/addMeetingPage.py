@@ -27,6 +27,10 @@ class AddMeetingPage(Page):
 
         self.submit_button = tk.Button(self.wrapper, text="Adauga intalnire", command=self.get_data)
 
+        self.message_label = tk.Label(self.wrapper, text="", bg="grey")
+
+        self.controller = None
+
     def create_page(self):
         self.start_label.grid(row=0, column=0, padx=2, pady=(10, 0))
         self.start_entry.grid(row=0, column=1, padx=2, pady=(10, 0))
@@ -44,6 +48,8 @@ class AddMeetingPage(Page):
         self.list_of_participants.grid(row=3, column=0, columnspan=4, padx=2, pady=(5, 0))
 
         self.submit_button.grid(row=4, column=0, columnspan=4 , padx=2, pady=(20, 0), sticky="we")
+
+        self.message_label.grid(row=5, column=0, columnspan=4, padx=2, pady=(10, 0), sticky="we", ipady=5)
 
         self.title_label.pack(fill="both", pady=20)
         self.wrapper.pack(expand=True)
@@ -63,9 +69,26 @@ class AddMeetingPage(Page):
         print("End: ", end_date, end_hour)
         print("Participants: ", participants_list)
 
+        self.controller.add_meeting(start_date, start_hour, end_date, end_hour, participants_list)
+
     def clear_form(self):
         self.start_entry.delete(0, "end")
         self.start_hour_entry.delete(0, "end")
         self.end_entry.delete(0, "end")
         self.end_hour_entry.delete(0, "end")
         self.list_of_participants.delete("1.0", "end")
+
+    def set_controller(self, controller):
+        self.controller = controller
+
+    def show_message_label(self, success, err_message=None):
+        bg = "green"
+        fg = "white"
+        text = "Persoana adaugata cu suces"
+
+        if not success:
+            bg = "red"
+            fg = "white"
+            text = err_message
+
+        self.message_label.configure(bg=bg, fg=fg, text=text)

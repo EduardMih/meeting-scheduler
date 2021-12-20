@@ -8,3 +8,11 @@ class PersonExists(Exception):
 
 class PersonDoesNotExistException(Exception):
     pass
+
+
+class InvalidStartDatetime(Exception):
+    pass
+
+
+class InvalidEndDatetime(Exception):
+    pass

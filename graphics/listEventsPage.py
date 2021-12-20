@@ -28,6 +28,10 @@ class ListEventsPage(Page):
 
         self.filter_button = tk.Button(self.top_frame, text="Filter", command=self.filter_command)
 
+        self.message_label = tk.Label(self.wrapper, text="", bg="grey")
+
+        self.controller = None
+
     def pack_elements(self):
         self.title_label.pack(fill="both", pady=20)
         self.top_frame.pack(side="top")
@@ -84,5 +88,34 @@ class ListEventsPage(Page):
 
         print("Start: ", start_date, start_hour)
         print("End: ", end_date, end_hour)
+
+        self.controller.get_meetings(start_date, start_hour, end_date, end_hour)
+
+    def set_controller(self, controller):
+        self.controller = controller
+
+    def show_message_label(self, success, err_message=None):
+        bg = "green"
+        fg = "white"
+        text = "Persoana adaugata cu suces"
+
+        if not success:
+            bg = "red"
+            fg = "white"
+            text = err_message
+
+        self.message_label.configure(bg=bg, fg=fg, text=text)
+
+    def show_meetings(self, data: []):
+        for labels in self.main_frame.winfo_children():
+            labels.destroy()
+
+        for meeting in data:
+            temp = "Title {}\nStart Date: {}\nEnd Date: {}\nParticipants: {}"
+            tk.Label(self.main_frame, text=temp.format("Temp", meeting[0], meeting[1], meeting[2]), justify="left",
+                     bg="white", anchor="w").pack(pady=20, anchor="w", fill=tk.X, expand=True)
+
+
+
 
 
