@@ -7,9 +7,9 @@ class PersonService:
     def __init__(self):
         self.person_DAO = PersonDAO()
 
-    def insert_person(self, person: Person):
+    def insert_person(self, firstname, lastname):
         try:
-            self.person_DAO.insert_person(person.firstname, person.lastname)
+            self.person_DAO.insert_person(firstname, lastname)
         except Exception as e:
             raise
 

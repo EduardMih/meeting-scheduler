@@ -15,7 +15,7 @@ class MeetingService:
         self.person_DAO = PersonDAO()
         self.date_format = "%d-%m-%Y %H:%M"
 
-    def insert_meeting(self, start_date, end_date, attendees: [(str, str)]):
+    def insert_meeting(self, title, start_date, end_date, attendees: [(str, str)]):
 
         start = self.convert_date(start_date)
 
@@ -28,7 +28,7 @@ class MeetingService:
             raise InvalidEndDatetime
 
         try:
-            new_meeting_id = self.meeting_DAO.insert_meeting(start, end)
+            new_meeting_id = self.meeting_DAO.insert_meeting(title, start, end)
 
             for attendee in attendees:
                 row = self.person_DAO.select_person_by_firstname_and_lastname(attendee[0],
@@ -43,7 +43,7 @@ class MeetingService:
         except PersonDoesNotExistException:
             raise
         except Exception as e:
-            print("Exceptie necunoscuta la insert meeting")
+            print("Exceptie necunoscuta la insert meeting in service")
 
     def filter_meetings(self, start_date, end_date) -> [Meeting]:
         start = self.convert_date(start_date)
@@ -61,7 +61,8 @@ class MeetingService:
             meeting_rows = self.meeting_DAO.filter_meetings_by_date(start, end)
 
             for meeting_row in meeting_rows:
-                meeting = Meeting(meeting_row['start_date'], meeting_row['end_date'], None, meeting_row['id'])
+                meeting = Meeting(meeting_row['title'], meeting_row['start_date'],
+                                  meeting_row['end_date'], None, meeting_row['id'])
 
                 attendees_id_list = [x['person_id'] for x in self.meeting_person_DAO.select_all_meeting_attendees(meeting_row['id'])]
                 for attendee_id in attendees_id_list:
@@ -72,7 +73,7 @@ class MeetingService:
 
                 meetings_list.append(meeting)
 
-                return meetings_list
+            return meetings_list
 
         except Exception as e:
             print(e)

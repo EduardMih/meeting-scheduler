@@ -1,4 +1,5 @@
 from service.meetingService import MeetingService
+from exception.exceptions import *
 
 
 class ListMeetingController:
@@ -21,11 +22,18 @@ class ListMeetingController:
                     person_str = person.lastname + " " + person.firstname
                     person_list.append(person_str)
 
-                meeting_data.append((meeting.start_date.strftime(self.date_format),
+                meeting_data.append((meeting.title, meeting.start_date.strftime(self.date_format),
                                      meeting.end_date.strftime(self.date_format),
                                      ", ".join(person_list)))
 
-            self.view.show_meetings(meeting_data)
+            self.view.show_message_label(True)
+            self.view.populate_meetings(meeting_data)
+
+        except InvalidStartDatetime as e:
+            self.view.show_message_label(False, "Start date/hour nu este formatat corect!")
+
+        except InvalidEndDatetime as e:
+            self.view.show_message_label(False, "End date/hours nu este formatat corect!")
 
         except Exception as e:
             print(e)

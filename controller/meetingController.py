@@ -8,7 +8,7 @@ class MeetingController:
         self.view = view
         self.date_format = '%d-%m-%Y %H:%M'
 
-    def add_meeting(self, start_date, start_hour, end_date, end_hour, attendees: str):
+    def add_meeting(self, title, start_date, start_hour, end_date, end_hour, attendees: str):
         start = start_date + " " + start_hour
         end = end_date + " " + end_hour
 
@@ -23,7 +23,7 @@ class MeetingController:
                 lastname, firstname = attendee.split(' ', 1)
                 attendee_list.append((firstname, lastname))
 
-            self.meeting_service.insert_meeting(start, end, attendee_list)
+            self.meeting_service.insert_meeting(title, start, end, attendee_list)
 
             self.view.show_message_label(True)
 

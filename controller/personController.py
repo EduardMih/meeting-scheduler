@@ -1,6 +1,4 @@
-from graphics import addPersonPage
 from service.personService import PersonService
-from model.personModel import Person
 from exception.exceptions import *
 
 
@@ -11,8 +9,7 @@ class PersonController:
 
     def add_person(self, firstname, lastname):
         try:
-            new_person = Person(lastname, firstname)
-            self.person_service.insert_person(new_person)
+            self.person_service.insert_person(firstname, lastname)
 
             self.view.show_message_label(True)
         except PersonExists:

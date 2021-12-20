@@ -28,7 +28,7 @@ class ListEventsPage(Page):
 
         self.filter_button = tk.Button(self.top_frame, text="Filter", command=self.filter_command)
 
-        self.message_label = tk.Label(self.wrapper, text="", bg="grey")
+        self.message_label = tk.Label(self.top_frame, text="", bg="grey")
 
         self.controller = None
 
@@ -40,14 +40,14 @@ class ListEventsPage(Page):
         self.canvas.pack(fill="both", expand=True, side="left")
         self.wrapper.pack(fill="both", expand=True)
 
-    def populate_events(self):
-        for i in range(20):
-            temp = "Title {}\nStart Date: 2021-11-29 10:12\nEnd Date: 2021-11-29 11:00\nParticipants: Andrei, Robert"
-            temp = temp + "Andrei, " * i
-            tk.Label(self.main_frame, text=temp.format(i), justify="left", bg="white", anchor="w").pack(pady=20,
-                                                                                                        anchor="w",
-                                                                                                        fill=tk.X
-                                                                                                        )
+    def populate_meetings(self, data: [str]):
+        for labels in self.main_frame.winfo_children():
+            labels.destroy()
+
+        for meeting in data:
+            temp = "Title {}\nStart Date: {}\nEnd Date: {}\nParticipants: {}"
+            tk.Label(self.main_frame, text=temp.format(meeting[0], meeting[1], meeting[2], meeting[3]), justify="left",
+                     bg="white", anchor="w").pack(pady=20, anchor="w", fill=tk.X, expand=True)
 
     def create_canvas(self):
         self.canvas.create_window(0, 0, anchor='nw', window=self.main_frame)
@@ -69,10 +69,12 @@ class ListEventsPage(Page):
         self.end_hour_label.grid(row=1, column=2, padx=2, pady=(10, 0))
         self.end_hour_entry.grid(row=1, column=3, padx=2, pady=(10, 0))
 
+        self.message_label.grid(row=2, column=0, columnspan=5, padx=2, pady=(10, 0), ipady=5, sticky="we")
+
         self.filter_button.grid(row=0, column=4, rowspan=2, sticky=tk.N+tk.S, padx=5, pady=(10, 0))
 
     def create_page(self):
-        self.populate_events()
+        #self.populate_meetings()
         self.create_canvas()
         self.grid_entries()
         self.pack_elements()
@@ -85,35 +87,22 @@ class ListEventsPage(Page):
         end_date = self.end_entry.get()
         end_hour = self.end_hour_entry.get()
 
-
-        print("Start: ", start_date, start_hour)
-        print("End: ", end_date, end_hour)
-
         self.controller.get_meetings(start_date, start_hour, end_date, end_hour)
 
     def set_controller(self, controller):
         self.controller = controller
 
     def show_message_label(self, success, err_message=None):
-        bg = "green"
+        bg = "grey"
+        text = ""
         fg = "white"
-        text = "Persoana adaugata cu suces"
-
         if not success:
             bg = "red"
             fg = "white"
             text = err_message
-
         self.message_label.configure(bg=bg, fg=fg, text=text)
 
-    def show_meetings(self, data: []):
-        for labels in self.main_frame.winfo_children():
-            labels.destroy()
 
-        for meeting in data:
-            temp = "Title {}\nStart Date: {}\nEnd Date: {}\nParticipants: {}"
-            tk.Label(self.main_frame, text=temp.format("Temp", meeting[0], meeting[1], meeting[2]), justify="left",
-                     bg="white", anchor="w").pack(pady=20, anchor="w", fill=tk.X, expand=True)
 
 
 
