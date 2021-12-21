@@ -26,12 +26,19 @@ class MeetingController:
             self.meeting_service.insert_meeting(title, start, end, attendee_list)
 
             self.view.show_message_label(True)
+            self.view.clear_form()
 
         except InvalidStartDatetime as e:
             self.view.show_message_label(False, "Start date/hour nu este formatat corect!")
 
         except InvalidEndDatetime as e:
             self.view.show_message_label(False, "End date/hours nu este formatat corect!")
+
+        except InvalidTimeInterval as e:
+            self.view.show_message_label(False, "Intervalul de timp nu este corect")
+
+        except PersonDoesNotExistException as e:
+            self.view.show_message_label(False, "Persona {} {} nu exista".format(e.person.lastname, e.person.firstname))
 
         except Exception as e:
             print(e)

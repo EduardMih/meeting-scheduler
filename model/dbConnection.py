@@ -3,8 +3,7 @@ from psycopg2.extras import RealDictCursor
 
 
 class DbConnection:
-    def __init__(self):
-        self.connection = None
+    connection = None
 
     def create_connection(self):
         try:
@@ -16,13 +15,7 @@ class DbConnection:
             )
 
         except psycopg2.DatabaseError as e:
-            #print(f'Error {e}')
-            #sys.exit(1)
             raise
-
-        # finally:
-            # if self.connection:
-                # self.connection.close()
 
     def get_connection(self):
         if not self.connection:

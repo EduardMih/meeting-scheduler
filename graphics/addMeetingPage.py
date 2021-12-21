@@ -68,13 +68,13 @@ class AddMeetingPage(Page):
         end_hour = self.end_hour_entry.get()
         meeting_title = self.meeting_title_entry.get()
 
-
         participants_list = self.list_of_participants.get("1.0", "end")
-        self.clear_form()
+        #self.clear_form()
 
         self.controller.add_meeting(meeting_title, start_date, start_hour, end_date, end_hour, participants_list)
 
     def clear_form(self):
+        self.meeting_title_entry.delete(0, "end")
         self.start_entry.delete(0, "end")
         self.start_hour_entry.delete(0, "end")
         self.end_entry.delete(0, "end")

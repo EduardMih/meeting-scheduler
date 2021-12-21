@@ -27,6 +27,9 @@ class MeetingService:
         if not end:
             raise InvalidEndDatetime
 
+        if start > end:
+            raise InvalidTimeInterval
+
         try:
             new_meeting_id = self.meeting_DAO.insert_meeting(title, start, end)
 
@@ -36,7 +39,7 @@ class MeetingService:
 
                 if row is None:
 
-                    raise PersonDoesNotExistException
+                    raise PersonDoesNotExistException(Person(attendee[1], attendee[0]))
 
                 self.meeting_person_DAO.insert_meeting_person(new_meeting_id, row['id'])
 

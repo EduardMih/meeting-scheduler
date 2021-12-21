@@ -50,6 +50,11 @@ class AddPerssonPage(Page):
             text = err_message
 
         self.message_label.configure(bg=bg, fg=fg, text=text)
+        self.clear_form()
+
+    def clear_form(self):
+        self.lastname_entry.delete(0, "end")
+        self.firstname_entry.delete(0, "end")
 
 
 

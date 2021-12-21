@@ -7,7 +7,8 @@ class PersonExists(Exception):
 
 
 class PersonDoesNotExistException(Exception):
-    pass
+    def __init__(self, person):
+        self.person = person
 
 
 class InvalidStartDatetime(Exception):
@@ -15,4 +16,8 @@ class InvalidStartDatetime(Exception):
 
 
 class InvalidEndDatetime(Exception):
+    pass
+
+
+class InvalidTimeInterval(Exception):
     pass
