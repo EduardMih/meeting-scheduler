@@ -81,6 +81,40 @@ class MeetingService:
         except Exception as e:
             print(e)
 
+    def get_all_meetings(self):
+        try:
+            meeting_rows = self.meeting_DAO.select_all_meetings()
+
+            meetings_list = self.create_meeting_list(meeting_rows)
+
+            return meetings_list
+
+        except Exception as e:
+            print(e)
+
+    def create_meeting_list(self, meeting_rows):
+        try:
+            meetings_list = []
+            for meeting_row in meeting_rows:
+                meeting = Meeting(meeting_row['title'], meeting_row['start_date'],
+                                 meeting_row['end_date'], None, meeting_row['id'])
+
+                attendees_id_list = [x['person_id'] for x in
+                                 self.meeting_person_DAO.select_all_meeting_attendees(meeting_row['id'])]
+                for attendee_id in attendees_id_list:
+                    attendee_row = self.person_DAO.select_person_by_id(attendee_id)
+                    meeting.attendees_list.append(Person(attendee_row['lastname'],
+                                                     attendee_row['firstname'],
+                                                     attendee_row['id']))
+
+                meetings_list.append(meeting)
+
+            return meetings_list
+
+        except Exception:
+            raise
+
+
     def convert_date(self, date):
         try:
             date_time_obj = datetime.strptime(date, self.date_format)

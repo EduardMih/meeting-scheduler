@@ -12,6 +12,7 @@ class PersonController:
             self.person_service.insert_person(firstname, lastname)
 
             self.view.show_message_label(True)
+            self.view.clear_from()
         except PersonExists:
             self.view.show_message_label(False, "Persoana exista deja!")
         except Exception as e:

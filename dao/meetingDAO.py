@@ -6,6 +6,7 @@ class MeetingDAO:
     def __init__(self):
         self.insert_sql = """INSERT INTO meetings (title, start_date, end_date) VALUES (%s, %s, %s) RETURNING id"""
         self.select_sql = """SELECT * FROM meetings WHERE start_date >= %s AND end_date <= %s"""
+        self.select_all_sql = """SELECT * FROM meetings"""
 
     def insert_meeting(self, title, start_date, end_date):
         db_connection = DbConnection()
@@ -45,4 +46,24 @@ class MeetingDAO:
         else:
 
             return rows
+
+    def select_all_meetings(self):
+        db_connection = DbConnection()
+
+        try:
+            connection = db_connection.get_connection()
+
+            cursor = connection.cursor()
+            cursor.execute(self.select_all_sql)
+            rows = cursor.fetchall()
+
+            cursor.close()
+            db_connection.close_connection()
+        except Exception:
+            raise
+
+        else:
+
+            return rows
+
 
