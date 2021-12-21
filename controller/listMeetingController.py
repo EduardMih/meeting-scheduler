@@ -28,6 +28,7 @@ class ListMeetingController:
 
             self.view.show_message_label(True)
             self.view.populate_meetings(meeting_data)
+            self.view.refresh()
 
         except InvalidStartDatetime as e:
             self.view.show_message_label(False, "Start date/hour nu este formatat corect!")

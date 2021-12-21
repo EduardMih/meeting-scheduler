@@ -102,8 +102,8 @@ class ListEventsPage(Page):
             text = err_message
         self.message_label.configure(bg=bg, fg=fg, text=text)
 
-
-
+    def refresh(self):
+        self.create_canvas()
 
 
 
