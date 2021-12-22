@@ -1,4 +1,6 @@
 import tkinter as tk
+from tkinter import messagebox
+from tkinter.filedialog import askopenfilename, asksaveasfile
 
 
 class SideMenu:
@@ -10,11 +12,23 @@ class SideMenu:
         self.title_label = tk.Label(self.menu, text="Menu", bg="orange", fg="white", font="Helvetica 15 bold")
         self.menu_options = ["Adauga persoana", "Adauga eveniment", "Afiseaza evenimente", "Import", "Export"]
 
+        self.controller = None
+
     def create_menu_options(self):
         frame = tk.Frame(self.menu, bg="orange")
         for i in range(len(self.menu_options)):
-            tk.Button(frame, text=self.menu_options[i], bg="blue", fg="white",
-                      command=lambda i=i: self.show_page(i)).pack(pady=20)
+            if i <= 2:
+                tk.Button(frame, text=self.menu_options[i], bg="blue", fg="white",
+                          command=lambda i=i: self.show_page(i)).pack(pady=20)
+
+            if i == 3:
+
+                tk.Button(frame, text=self.menu_options[i], bg="blue", fg="white",
+                          command=self.import_file_dialog).pack(pady=20)
+
+            if i == 4:
+                tk.Button(frame, text=self.menu_options[i], bg="blue", fg="white",
+                          command=self.export_file_dialog).pack(pady=20)
 
         frame.pack(expand=True, padx=10)
 
@@ -30,3 +44,23 @@ class SideMenu:
         self.frame[page_index].pack(fill="both", expand=True)
         self.current_frame = self.frame[page_index]
 
+    def import_file_dialog(self):
+        filename = askopenfilename(filetypes=[("iCalendar files", "*.ics")])
+
+        self.controller.import_cal(filename)
+
+    def export_file_dialog(self):
+        filename = asksaveasfile(filetypes=[("iCalendar files", "*.ics")], defaultextension="*.ics", initialfile="export.ics")
+
+        self.controller.export_cal(filename)
+
+    def set_controller(self, controller):
+        self.controller = controller
+
+    def show_message(self, success, title, message):
+        if success:
+            messagebox.showinfo(title, message)
+
+        else:
+
+            messagebox.showerror(title, message)

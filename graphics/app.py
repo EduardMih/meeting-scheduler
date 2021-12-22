@@ -6,6 +6,7 @@ from graphics.addMeetingPage import AddMeetingPage
 from controller.personController import PersonController
 from controller.meetingController import MeetingController
 from controller.listMeetingController import ListMeetingController
+from controller.importExportController import ImportExportController
 
 
 class App:
@@ -34,8 +35,12 @@ class App:
                   add_meeting.create_page(),
                   list_meetings.create_page()]
 
-        menu = SideMenu(self.window, frames, frames[0]).create_menu()
-        menu.pack(side="left", fill=tk.Y, padx=(0, 10))
+        menu = SideMenu(self.window, frames, frames[0])
+
+        import_export_controller = ImportExportController(menu)
+        menu.set_controller(import_export_controller)
+
+        menu.create_menu().pack(side="left", fill=tk.Y, padx=(0, 10))
         frames[0].pack(fill="both", expand=True)
 
         self.window.mainloop()

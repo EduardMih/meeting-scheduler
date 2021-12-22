@@ -59,22 +59,13 @@ class MeetingService:
         if not end:
             raise InvalidEndDatetime
 
+        if start > end:
+            raise InvalidTimeInterval
+
         try:
-            meetings_list = []
             meeting_rows = self.meeting_DAO.filter_meetings_by_date(start, end)
 
-            for meeting_row in meeting_rows:
-                meeting = Meeting(meeting_row['title'], meeting_row['start_date'],
-                                  meeting_row['end_date'], None, meeting_row['id'])
-
-                attendees_id_list = [x['person_id'] for x in self.meeting_person_DAO.select_all_meeting_attendees(meeting_row['id'])]
-                for attendee_id in attendees_id_list:
-                    attendee_row = self.person_DAO.select_person_by_id(attendee_id)
-                    meeting.attendees_list.append(Person(attendee_row['lastname'],
-                                                         attendee_row['firstname'],
-                                                         attendee_row['id']))
-
-                meetings_list.append(meeting)
+            meetings_list = self.create_meeting_list(meeting_rows)
 
             return meetings_list
 

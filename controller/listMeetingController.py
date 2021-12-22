@@ -36,6 +36,9 @@ class ListMeetingController:
         except InvalidEndDatetime as e:
             self.view.show_message_label(False, "End date/hours nu este formatat corect!")
 
+        except InvalidTimeInterval as e:
+            self.view.show_message_label(False, "Intervalul de timp nu este corect!")
+
         except Exception as e:
             print(e)
 

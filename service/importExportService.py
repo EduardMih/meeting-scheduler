@@ -1,6 +1,4 @@
 from service.meetingService import MeetingService
-from model.meetingModel import Meeting
-from model.personModel import Person
 from icalendar import Calendar, Event
 from datetime import datetime
 
@@ -25,11 +23,10 @@ class ImportExportService:
 
             cal.add_component(cal_event)
 
-        with open("C:\\Users\\hamza\\Desktop\\export.ics", 'wb') as f:
+        with open(file_path, 'wb') as f:
             f.write(cal.to_ical())
 
     def import_meetings(self, file_path):
-        meetings_list = []
         with open(file_path, "rb") as f:
             cal = Calendar.from_ical(f.read())
 
@@ -48,17 +45,12 @@ class ImportExportService:
                         for attendee in attendees:
                             attendees_list.append(self.extract_person_from_string(attendee))
 
-                    meetings_list.append(Meeting(title, start_date, end_date, attendees_list))
 
-        for meeting in meetings_list:
-            self.meeting_service.insert_meeting(meeting.title, meeting.start_date.strftime("%d-%m-%Y %H:%M"),
-                                                meeting.end_date.strftime("%d-%m-%Y %H:%M"), meeting.attendees_list)
-
-        return meetings_list
+                    self.meeting_service.insert_meeting(title, start_date.strftime("%d-%m-%Y %H:%M"),
+                                                        end_date.strftime("%d-%m-%Y %H:%M"), attendees_list)
 
     def extract_person_from_string(self, string: str):
         lastname, firstname = string.split(" ", 1)
 
-        #return Person(lastname, firstname)
         return (firstname, lastname)
 
