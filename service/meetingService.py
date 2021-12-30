@@ -9,13 +9,29 @@ import pytz
 
 
 class MeetingService:
+    """
+    Class to validate controller request and call appropriate DAOs to perform desired action.
+    """
     def __init__(self):
+        """
+        MeetingService class constructor to initialize object.
+        """
         self.meeting_DAO = MeetingDAO()
         self.meeting_person_DAO = MeetingPersonDAO()
         self.person_DAO = PersonDAO()
         self.date_format = "%d-%m-%Y %H:%M"
 
     def insert_meeting(self, title, start_date, end_date, attendees: [(str, str)]):
+        """
+        Method to validate user input, raise exception in case of problems,
+        and call DAO methods to insert a new meeting.
+
+        :param title: Meeting title.
+        :param start_date: Meeting start date.
+        :param end_date: Meeting end date.
+        :param attendees: List of tuples containing firstname and lastname
+        :return: None
+        """
 
         start = self.convert_date(start_date)
 
@@ -47,6 +63,14 @@ class MeetingService:
             raise
 
     def filter_meetings(self, start_date, end_date) -> [Meeting]:
+        """
+        Method to filter meetings according to time range.
+        Time range validations are performed and exceptions raised in case of problems.
+
+        :param start_date: Time range start.
+        :param end_date: Time range end.
+        :return: Selected meetings list.
+        """
         start = self.convert_date(start_date)
 
         if not start:
@@ -71,6 +95,11 @@ class MeetingService:
             raise
 
     def get_all_meetings(self):
+        """
+        Method to select all meetings.
+
+        :return: All meetings' data list.
+        """
         try:
             meeting_rows = self.meeting_DAO.select_all_meetings()
 
@@ -82,6 +111,12 @@ class MeetingService:
             raise
 
     def create_meeting_list(self, meeting_rows):
+        """
+        Auxiliary method to pack meetings.
+
+        :param meeting_rows: List off meetings' data.
+        :return: Meetings list
+        """
         try:
             meetings_list = []
             for meeting_row in meeting_rows:
@@ -105,6 +140,12 @@ class MeetingService:
 
 
     def convert_date(self, date):
+        """
+        Auxiliary method to convert string to date, and validate date format.
+
+        :param date: Date string.
+        :return: Datetime object corresponding to string.
+        """
         try:
             date_time_obj = datetime.strptime(date, self.date_format)
             timezone = pytz.timezone("Europe/Bucharest")

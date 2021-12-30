@@ -10,13 +10,23 @@ from controller.importExportController import ImportExportController
 
 
 class App:
+    """
+    Main app class. Creates and pack all the others frames.
+    """
     def __init__(self):
+        """
+        App constructor to initialize object.
+        """
         self.window = tk.Tk()
         self.window.title("Meeting scheduler")
         self.window.minsize(width=1000, height=800)
         self.window.configure(bg="grey")
 
     def run(self):
+        """
+        Creates all pages, side menu, controllers and assign controllers to pages.
+        :return: None
+        """
         self.window.update()
 
         add_person = AddPerssonPage(self.window)

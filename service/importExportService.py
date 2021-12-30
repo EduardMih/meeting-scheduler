@@ -4,10 +4,23 @@ from datetime import datetime
 
 
 class ImportExportService:
+    """
+    Class to validate controller requests, call appropriate meeting service method and
+    to write/read data form file.
+    """
     def __init__(self):
+        """
+        ImportExportService class controller to initialize the object.
+        """
         self.meeting_service = MeetingService()
 
     def export_meetings(self, file_path):
+        """
+        Method that uses meeting service to get all meetings and then exports them in .ics format.
+
+        :param file_path: Path to file where to write calendar in .ics format.
+        :return: None
+        """
         cal = Calendar()
         try:
             meetings_list = self.meeting_service.get_all_meetings()
@@ -32,6 +45,13 @@ class ImportExportService:
                 f.write(cal.to_ical())
 
     def import_meetings(self, file_path):
+        """
+        Method that read .ics file, convert data to internal model and insert meetings in database.
+        Data validation is performed and exceptions are rise in case of problems.
+
+        :param file_path: Path to the files where to take data from.
+        :return: None
+        """
         with open(file_path, "rb") as f:
             cal = Calendar.from_ical(f.read())
 
@@ -58,6 +78,12 @@ class ImportExportService:
                 raise
 
     def extract_person_from_string(self, string: str):
+        """
+        Auxiliary method to extract person info from string.
+
+        :param string: String containing lastname and firstname of person.
+        :return: (firstname, lastname) tuple
+        """
         lastname, firstname = string.split(" ", 1)
 
         return (firstname, lastname)

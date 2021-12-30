@@ -4,12 +4,26 @@ from exception.exceptions import *
 
 
 class PersonDAO:
+    """
+    Class responsible for performing basic operations on person table: insert, select by firstname and lastname,
+    select by id.
+    """
     def __init__(self):
+        """
+        PersonDAO class constructor to initialize the object and declare SQL statements.
+        """
         self.insert_sql = """INSERT INTO persons (firstname, lastname) VALUES (%s, %s)"""
         self.select_sql_by_firstname_and_lastname = """SELECT * FROM persons WHERE firstname=%s AND lastname=%s"""
         self.select_sql_by_id = """SELECT * FROM persons WHERE id=%s"""
 
     def insert_person(self, firstname, lastname):
+        """
+        Method to insert a person in person table.
+
+        :param firstname: Person's firstname.
+        :param lastname: Person's lastname
+        :return: None
+        """
         db_connection = DbConnection()
 
         try:
@@ -30,6 +44,13 @@ class PersonDAO:
                 raise
 
     def select_person_by_firstname_and_lastname(self, firstname, lastname):
+        """
+        Method to select a person by firstname and lastname.
+
+        :param firstname: Person's firstname.
+        :param lastname: Person's lastname.
+        :return: Selected person.
+        """
         db_connection = DbConnection()
 
         try:
@@ -49,6 +70,12 @@ class PersonDAO:
             return row
 
     def select_person_by_id(self, person_id):
+        """
+        Method to select person by id.
+
+        :param person_id: Person's id.
+        :return: Selected person.
+        """
         db_connection = DbConnection()
 
         try:

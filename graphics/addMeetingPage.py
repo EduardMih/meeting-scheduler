@@ -2,7 +2,14 @@ from graphics.page import *
 
 
 class AddMeetingPage(Page):
+    """
+    AddMeetingPage class to manage a page (view) where user can add new meetings.
+    """
     def __init__(self, window: tk.Tk):
+        """
+        AddMeetingPage constructor to initialize the object.
+        :param window: Parent window.
+        """
         super(AddMeetingPage, self).__init__(window)
 
         self.title_label = tk.Label(self.container, text="Adauga meeting", bg="grey", fg="white", font=title_font)
@@ -34,6 +41,10 @@ class AddMeetingPage(Page):
         self.controller = None
 
     def create_page(self):
+        """
+        Uses grid manager to pack all elements inside page.
+        :return: Container frame that contains all elements inside page.
+        """
         self.meeting_title_label.grid(row=0, column=0, padx=2, pady=(10, 0))
         self.meeting_title_entry.grid(row=0, column=1, columnspan=3, padx=2, pady=(10, 0), sticky="we")
 
@@ -62,6 +73,10 @@ class AddMeetingPage(Page):
         return self.container
 
     def get_data(self):
+        """
+        Get data about new meeting and call controller to insert a new meeting.
+        :return: None
+        """
         start_date = self.start_entry.get()
         start_hour = self.start_hour_entry.get()
         end_date = self.end_entry.get()
@@ -74,6 +89,10 @@ class AddMeetingPage(Page):
         self.controller.add_meeting(meeting_title, start_date, start_hour, end_date, end_hour, participants_list)
 
     def clear_form(self):
+        """
+        Clears form after submit.
+        :return: None
+        """
         self.meeting_title_entry.delete(0, "end")
         self.start_entry.delete(0, "end")
         self.start_hour_entry.delete(0, "end")
@@ -82,9 +101,20 @@ class AddMeetingPage(Page):
         self.list_of_participants.delete("1.0", "end")
 
     def set_controller(self, controller):
+        """
+        Sets the controller for current view.
+        :param controller: Controller class to control current view.
+        :return: None
+        """
         self.controller = controller
 
     def show_message_label(self, success, err_message=None):
+        """
+        Displays status message.
+        :param success: Operation was successful or not.
+        :param err_message: In case of error, error message.
+        :return: None
+        """
         bg = "green"
         fg = "white"
         text = "Meeting adaugat cu succes"
