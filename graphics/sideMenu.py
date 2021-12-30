@@ -47,12 +47,14 @@ class SideMenu:
     def import_file_dialog(self):
         filename = askopenfilename(filetypes=[("iCalendar files", "*.ics")])
 
-        self.controller.import_cal(filename)
+        if filename:
+            self.controller.import_cal(filename)
 
     def export_file_dialog(self):
         filename = asksaveasfile(filetypes=[("iCalendar files", "*.ics")], defaultextension="*.ics", initialfile="export.ics")
 
-        self.controller.export_cal(filename)
+        if filename:
+            self.controller.export_cal(filename)
 
     def set_controller(self, controller):
         self.controller = controller

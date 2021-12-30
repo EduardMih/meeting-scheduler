@@ -19,7 +19,7 @@ class MeetingPersonDAO:
 
             cursor.close()
             db_connection.close_connection()
-        except psycopg2.DatabaseError as e:
+        except psycopg2.DatabaseError:
             raise
 
     def select_all_meeting_attendees(self, meeting_id):

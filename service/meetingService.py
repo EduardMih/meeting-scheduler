@@ -43,10 +43,8 @@ class MeetingService:
 
                 self.meeting_person_DAO.insert_meeting_person(new_meeting_id, row['id'])
 
-        except PersonDoesNotExistException:
+        except Exception:
             raise
-        except Exception as e:
-            print("Exceptie necunoscuta la insert meeting in service")
 
     def filter_meetings(self, start_date, end_date) -> [Meeting]:
         start = self.convert_date(start_date)
@@ -69,8 +67,8 @@ class MeetingService:
 
             return meetings_list
 
-        except Exception as e:
-            print(e)
+        except Exception:
+            raise
 
     def get_all_meetings(self):
         try:
@@ -80,8 +78,8 @@ class MeetingService:
 
             return meetings_list
 
-        except Exception as e:
-            print(e)
+        except Exception:
+            raise
 
     def create_meeting_list(self, meeting_rows):
         try:

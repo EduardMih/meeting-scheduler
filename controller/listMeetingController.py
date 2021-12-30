@@ -40,5 +40,4 @@ class ListMeetingController:
             self.view.show_message_label(False, "Intervalul de timp nu este corect!")
 
         except Exception as e:
-            print(e)
-
+            self.view.show_message_label(False, "Exceptie necunoscuta la preluare meeting")

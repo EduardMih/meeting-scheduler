@@ -41,6 +41,6 @@ class MeetingController:
             self.view.show_message_label(False, "Persona {} {} nu exista".format(e.person.lastname, e.person.firstname))
 
         except Exception as e:
-            print(e)
+            self.view.show_message_label(False, "Exceptie necunoscuta la adaugare meeting")
 
 
