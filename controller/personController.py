@@ -31,5 +31,7 @@ class PersonController:
             self.view.clear_form()
         except PersonExists:
             self.view.show_message_label(False, "Persoana exista deja!")
+        except InvalidNameFormat:
+            self.view.show_message_label(False, "Firstname/lastname trebuie sa contina doar litere!")
         except Exception:
             self.view.show_message_label(False, "Eroare necunoscuta la adaugare persoana!")

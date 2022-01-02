@@ -1,7 +1,3 @@
-class DbConnectionException(Exception):
-    pass
-
-
 class PersonExists(Exception):
     """
     Exception raised when the person attempted to be inserted already exists.
@@ -34,5 +30,12 @@ class InvalidEndDatetime(Exception):
 class InvalidTimeInterval(Exception):
     """
     Exception raised when time range is not correct.
+    """
+    pass
+
+
+class InvalidNameFormat(Exception):
+    """
+    Exception raised when firstname or lastname contains anything else but alphabets.
     """
     pass

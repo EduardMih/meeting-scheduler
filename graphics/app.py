@@ -54,7 +54,3 @@ class App:
         frames[0].pack(fill="both", expand=True)
 
         self.window.mainloop()
-
-
-app = App()
-app.run()

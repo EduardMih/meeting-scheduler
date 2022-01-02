@@ -138,7 +138,6 @@ class MeetingService:
         except Exception:
             raise
 
-
     def convert_date(self, date):
         """
         Auxiliary method to convert string to date, and validate date format.

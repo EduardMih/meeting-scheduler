@@ -1,5 +1,6 @@
 from dao.personDAO import PersonDAO
 from model.personModel import Person
+from exception.exceptions import *
 
 
 class PersonService:
@@ -14,12 +15,15 @@ class PersonService:
 
     def insert_person(self, firstname, lastname):
         """
-        Method to add a new person.
+        Method to add a new person. Checks if firstname and lastname contains only alphabets.
 
         :param firstname: Person's firstname.
         :param lastname: Person's lastname.
         :return: None
         """
+        if (not firstname.isalpha()) or (not lastname.isalpha()):
+            raise InvalidNameFormat
+
         try:
             self.person_DAO.insert_person(firstname, lastname)
         except Exception:

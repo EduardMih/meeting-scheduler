@@ -1,3 +1,4 @@
-from dbUtils import createDb
+from graphics.app import App
 
-createDb.create_tables()
+app = App()
+app.run()
