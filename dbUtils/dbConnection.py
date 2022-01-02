@@ -8,7 +8,7 @@ class DbConnection:
     def create_connection(self):
         try:
             self.connection = psycopg2.connect(
-                database="meeting-scheduler",
+                database="meeting-scheduler2",
                 user="postgres",
                 password="postgres",
                 cursor_factory=RealDictCursor

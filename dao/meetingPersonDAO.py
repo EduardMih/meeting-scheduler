@@ -1,5 +1,5 @@
 import psycopg2
-from model.dbConnection import DbConnection
+from dbUtils.dbConnection import DbConnection
 
 
 class MeetingPersonDAO:

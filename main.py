@@ -1,7 +1,3 @@
-from service.importExportService import ImportExportService
+from dbUtils import createDb
 
-serv = ImportExportService()
-#serv.export_meetings("")
-
-meetings = serv.import_meetings("C:\\Users\\hamza\\Desktop\\export.ics")
-print(len(meetings))
+createDb.create_tables()
