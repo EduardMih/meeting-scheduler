@@ -47,7 +47,8 @@ class MeetingService:
             raise InvalidTimeInterval
 
         try:
-            new_meeting_id = self.meeting_DAO.insert_meeting(title, start, end)
+            attendees_id = []
+            # new_meeting_id = self.meeting_DAO.insert_meeting(title, start, end)
 
             for attendee in attendees:
                 row = self.person_DAO.select_person_by_firstname_and_lastname(attendee[0],
@@ -57,7 +58,11 @@ class MeetingService:
 
                     raise PersonDoesNotExistException(Person(attendee[1], attendee[0]))
 
-                self.meeting_person_DAO.insert_meeting_person(new_meeting_id, row['id'])
+                attendees_id.append(row['id'])
+
+            new_meeting_id = self.meeting_DAO.insert_meeting(title, start, end)
+            for attendee_id in attendees_id:
+                self.meeting_person_DAO.insert_meeting_person(new_meeting_id, attendee_id)
 
         except Exception:
             raise
